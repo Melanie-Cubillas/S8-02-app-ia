@@ -140,7 +140,7 @@ div.stButton > button:hover {
 /* ===== FILE UPLOADER ===== */
 
 section[data-testid="stFileUploader"] {
-    color: #2b1408;
+    color: #f5f0ed;
 }
 
 </style>
