@@ -113,7 +113,7 @@ textarea {
     background-color: #fffdf9 !important;
 }
 
-/* ===== BOTON ===== */
+/* ===== BOTON ANALIZAR ===== */
 
 div.stButton > button {
     background: linear-gradient(90deg, #7a3c15, #b87434);
@@ -130,17 +130,51 @@ div.stButton > button:hover {
     color: white;
 }
 
+/* ===== FILE UPLOADER ===== */
+
+section[data-testid="stFileUploader"] {
+    color: #2b1408;
+}
+
+/* Caja del uploader */
+
+[data-testid="stFileUploader"] section {
+    border: 2px dashed #8b4a20 !important;
+    border-radius: 16px !important;
+    background-color: #fffaf4 !important;
+    padding: 18px !important;
+}
+
+/* BOTON UPLOAD */
+
+[data-testid="stBaseButton-secondary"] {
+    background: #f5f0ed !important;
+    color: black !important;
+    border-radius: 12px !important;
+    border: 1px solid #cdb8a6 !important;
+    font-weight: 700 !important;
+}
+
+/* HOVER BOTON */
+
+[data-testid="stBaseButton-secondary"]:hover {
+    background: #ebe2dc !important;
+    color: black !important;
+    border: 1px solid #b99d86 !important;
+}
+
+/* Texto interno uploader */
+
+[data-testid="stFileUploader"] small {
+    color: #4a2a16 !important;
+    font-weight: 600;
+}
+
 /* ===== EXPANDERS ===== */
 
 .streamlit-expanderHeader {
     color: #2b1408 !important;
     font-weight: 700;
-}
-
-/* ===== FILE UPLOADER ===== */
-
-section[data-testid="stFileUploader"] {
-    color: #f5f0ed;
 }
 
 </style>
