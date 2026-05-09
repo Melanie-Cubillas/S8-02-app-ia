@@ -329,7 +329,7 @@ st.markdown(
 )
 
 st.markdown(
-    '<div class="subtitle">Reconoce pinturas famosas usando visión artificial, Gemini y MongoDB Atlas.</div>',
+    '<div class="subtitle">Reconoce pinturas famosas. Sube una imagen de una pintura y el experto te ayudará a identificarla.</div>',
     unsafe_allow_html=True
 )
 
