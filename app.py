@@ -28,63 +28,95 @@ st.markdown("""
 <style>
 
 .stApp {
-    background: linear-gradient(135deg, #fff8ef 0%, #f7efe5 50%, #efe1d1 100%);
+    background: linear-gradient(135deg, #fff8ef 0%, #f6eadb 50%, #ecd8c2 100%);
 }
+
+/* ===== TITULO ===== */
 
 .main-title {
     text-align: center;
     font-size: 52px;
     font-weight: 800;
-    color: #4b260b;
+    color: #2b1408;
     margin-top: 10px;
 }
 
 .subtitle {
     text-align: center;
     font-size: 18px;
-    color: #7b4b25;
+    color: #4a2a16;
     margin-bottom: 40px;
+    font-weight: 500;
 }
+
+/* ===== CARDS ===== */
 
 .card {
     background: #ffffff;
     padding: 24px;
     border-radius: 24px;
     box-shadow: 0px 8px 24px rgba(80, 45, 20, 0.12);
-    border: 1px solid #ead8c5;
+    border: 1px solid #d8c2aa;
     margin-bottom: 20px;
 }
+
+/* ===== RESULTADO ===== */
 
 .result-card {
     background: #ffffff;
     padding: 28px;
     border-radius: 24px;
     box-shadow: 0px 8px 24px rgba(80, 45, 20, 0.14);
-    border-left: 8px solid #b8793a;
-    color: #3b2414;
+    border-left: 8px solid #8b4a20;
+    color: #1f120b;
     font-size: 17px;
-    line-height: 1.8;
+    line-height: 1.9;
+    font-weight: 500;
 }
+
+/* ===== BADGE ===== */
 
 .badge {
     display: inline-block;
     padding: 7px 14px;
     border-radius: 999px;
-    background-color: #f4dfc8;
-    color: #5a2d0c;
-    font-weight: 700;
+    background-color: #ead0b3;
+    color: #3a1f10;
+    font-weight: 800;
     margin-bottom: 10px;
 }
 
+/* ===== TITULOS ===== */
+
 .section-title {
-    color: #4b260b;
+    color: #2b1408;
     font-size: 30px;
     font-weight: 800;
     margin-top: 20px;
 }
 
+/* ===== TEXTOS ===== */
+
+h1, h2, h3, h4, h5, h6 {
+    color: #2b1408 !important;
+}
+
+p, label, div {
+    color: #2d1a10;
+}
+
+/* ===== INPUTS ===== */
+
+textarea {
+    border-radius: 14px !important;
+    color: #1f120b !important;
+    background-color: #fffdf9 !important;
+}
+
+/* ===== BOTON ===== */
+
 div.stButton > button {
-    background: linear-gradient(90deg, #8b4a20, #c08345);
+    background: linear-gradient(90deg, #7a3c15, #b87434);
     color: white;
     border-radius: 14px;
     height: 52px;
@@ -94,12 +126,21 @@ div.stButton > button {
 }
 
 div.stButton > button:hover {
-    background: linear-gradient(90deg, #6f3514, #a96a2f);
+    background: linear-gradient(90deg, #5f2d0f, #9f6228);
     color: white;
 }
 
-textarea {
-    border-radius: 14px !important;
+/* ===== EXPANDERS ===== */
+
+.streamlit-expanderHeader {
+    color: #2b1408 !important;
+    font-weight: 700;
+}
+
+/* ===== FILE UPLOADER ===== */
+
+section[data-testid="stFileUploader"] {
+    color: #2b1408;
 }
 
 </style>
@@ -127,6 +168,7 @@ collection = get_mongo_collection()
 # =======================
 
 def crear_embedding(texto: str):
+
     response = client_genai.models.embed_content(
         model="gemini-embedding-001",
         contents=texto,
@@ -167,18 +209,18 @@ def describir_imagen(imagen):
     bytes_imagen = imagen.getvalue()
 
     prompt = """
-    Analiza esta pintura como un historiador del arte.
+    Analiza esta pintura como un experto en historia del arte.
 
     Describe:
     - colores
-    - estilo artístico
-    - personajes
-    - iluminación
     - composición
+    - iluminación
+    - personajes
+    - estilo artístico
     - símbolos visuales
-    - posibles pinturas famosas relacionadas
+    - posibles obras famosas relacionadas
 
-    Sé detallado y preciso.
+    Sé preciso y detallado.
     """
 
     response = client_genai.models.generate_content(
@@ -200,16 +242,17 @@ def generar_respuesta(pregunta, descripcion_imagen, contextos):
     contexto = "\n\n".join([c["texto"] for c in contextos])
 
     prompt = f"""
-Eres ArtVision IA, un experto en pinturas famosas, historia del arte,
-autores, movimientos artísticos y análisis visual de obras.
+Eres ArtVision IA, un experto en pinturas famosas,
+historia del arte y análisis visual de obras.
 
-Analiza la imagen subida por el usuario y compárala con la base de conocimiento.
+Analiza la imagen subida por el usuario y compárala
+con la base de conocimiento del PDF.
 
 No respondas en un solo párrafo.
 No uses saludos.
 No digas que eres una IA.
 
-Contexto del PDF:
+Contexto:
 {contexto}
 
 Descripción visual:
@@ -218,21 +261,21 @@ Descripción visual:
 Pregunta:
 {pregunta}
 
-Responde exactamente con este formato:
+Responde EXACTAMENTE con este formato:
 
-🖼️ Obra probable
+### 🖼️ Obra probable
 Nombre de la obra.
 
-👨‍🎨 Autor probable
+### 👨‍🎨 Autor probable
 Nombre del autor.
 
-🏛️ Movimiento artístico
+### 🏛️ Movimiento artístico
 Movimiento artístico.
 
-📖 Explicación
+### 📖 Explicación
 Explica por qué coincide con esa obra.
 
-🎯 Nivel de seguridad
+### 🎯 Nivel de seguridad
 Indica si es Alto, Medio o Bajo.
 """
 
@@ -242,7 +285,6 @@ Indica si es Alto, Medio o Bajo.
     )
 
     return response.text
-
 
 # =======================
 # INTERFAZ
@@ -254,11 +296,15 @@ st.markdown(
 )
 
 st.markdown(
-    '<div class="subtitle">Reconoce pinturas famosas mediante visión artificial, Gemini y MongoDB Atlas.</div>',
+    '<div class="subtitle">Reconoce pinturas famosas usando visión artificial, Gemini y MongoDB Atlas.</div>',
     unsafe_allow_html=True
 )
 
 col1, col2 = st.columns([1.1, 0.9], gap="large")
+
+# =======================
+# COLUMNA IZQUIERDA
+# =======================
 
 with col1:
 
@@ -267,7 +313,8 @@ with col1:
     st.markdown("### 🖼️ Carga una pintura")
 
     st.write(
-        "Sube una imagen de una obra de arte para identificar su posible autor y estilo artístico."
+        "Sube una imagen de una obra de arte para identificar "
+        "su autor, estilo y características visuales."
     )
 
     imagen = st.file_uploader(
@@ -285,11 +332,15 @@ with col1:
 
     st.markdown('</div>', unsafe_allow_html=True)
 
+# =======================
+# COLUMNA DERECHA
+# =======================
+
 with col2:
 
     st.markdown('<div class="card">', unsafe_allow_html=True)
 
-    st.markdown("🧠 Consulta al experto")
+    st.markdown("### 🧠 Consulta al experto")
 
     pregunta = st.text_area(
         "Pregunta",
@@ -356,6 +407,7 @@ if analizar:
                     st.write(descripcion)
 
                 with st.expander("📚 Fragmentos recuperados del PDF"):
+
                     for i, c in enumerate(similares, 1):
 
                         st.markdown(
