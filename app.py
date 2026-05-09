@@ -285,6 +285,7 @@ con la base de conocimiento del PDF.
 No respondas en un solo párrafo.
 No uses saludos.
 No digas que eres una IA.
+No menciones que la información lo obtuviste del pdf.
 
 Contexto:
 {contexto}
@@ -309,8 +310,6 @@ Movimiento artístico.
 ### 📖 Explicación
 Explica por qué coincide con esa obra.
 
-### 🎯 Nivel de seguridad
-Indica si es Alto, Medio o Bajo.
 """
 
     response = client_genai.models.generate_content(
